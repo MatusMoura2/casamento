@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convite de Casamento</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 10px 20px; /* Reduz o espaço no topo */
+      font-family: 'Georgia', serif;
+      background-color: #fdf1ec;
+      color: #4a3b2c;
+      text-align: center;
+    }
+
+    h1, h2 {
+      margin: 10px 0;
+    }
+
+    .button {
+      display: block;
+      width: 80%;
+      max-width: 300px;
+      margin: 15px auto;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #caa57d;
+      background-color: transparent;
+      color: #4a3b2c;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color: #caa57d;
+      color: white;
+    }
+
+    .form-container {
+      width: 80%;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px 0;
+    }
+
+    input[type="radio"], input[type="text"] {
+      margin: 10px;
+    }
+
+    input[type="text"] {
+      padding: 8px;
+      width: 90%;
+      max-width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button[type="submit"] {
+      margin-top: 15px;
+      background-color: #caa57d;
+      color: white;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <p>Você está convidado para um momento muito especial!</p>
+  <h1>
+    JAQUELINE<br>
+    <span style="font-size: 24px; display: block; margin: 20px 0;">❤️</span>
+    DIEISSON
+  </h1>
+  <p>
+    Estamos cada vez mais próximos de um dia muito especial. Contamos com sua presença! Caso não possa comparecer, por favor nos avise para melhor organização. Agradecemos desde já!<br><br>
+    Será realizado no <strong>Espaço de Eventos Império</strong>, situado na <strong>Rua Condé de Irajá, Qd. 101, Lt. 08, Jardim Buriti Sereno</strong>.<br>
+    No dia <strong>06 de setembro de 2025</strong>, às <strong>19:00h</strong>.
+  </p>  
+
+  <!-- Botões -->
+  <a class="button" href="https://maps.app.goo.gl/P6tz6XAb1XKxSwbe8" target="_blank">Ver no Mapa</a>
+  <a class="button" href="https://drive.google.com/file/d/1IlDbRXTsDa1RXfmOCci-ddXSxrFrl-hv/view?usp=drivesdk" target="_blank">Lista de Presentes</a>
+
+  <!-- Formulário de confirmação -->
+  <div class="form-container" id="confirmar">
+    <form onsubmit="return enviarWhatsapp()">
+      <p><strong>Confirmar sua presença?</strong></p>
+
+      <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required><br>
+
+      <label>
+        <input type="radio" name="presenca" value="Sim" required> Sim
+      </label>
+      <label>
+        <input type="radio" name="presenca" value="Não"> Não
+      </label>
+      <br>
+      <button class="button" type="submit">Enviar Confirmação</button>
+    </form>
+  </div>
+
+  <script>
+    function enviarWhatsapp() {
+      const nome = document.getElementById("nome").value.trim();
+      const opcoes = document.getElementsByName("presenca");
+      let escolha = "";
+
+      for (const opcao of opcoes) {
+        if (opcao.checked) {
+          escolha = opcao.value;
+          break;
+        }
+      }
+
+      if (!nome || !escolha) {
+        alert("Por favor, preencha seu nome e selecione uma opção.");
+        return false;
+      }
+
+      const numero = "5562985000574";
+      let mensagem = "";
+
+      if (escolha === "Sim") {
+        mensagem = encodeURIComponent(`Olá! Aqui é ${nome}.\nConfirmadíssimo(a)! Mal posso esperar por esse grande dia!`);
+      } else {
+        mensagem = encodeURIComponent(`Olá! Aqui é ${nome}.\nInfelizmente não poderei comparecer ao casamento. Desejo muitas felicidades aos noivos!`);
+      }
+
+      const url = `https://wa.me/${numero}?text=${mensagem}`;
+      window.open(url, '_blank');
+      return false; // evita envio padrão do formulário
+    }
+  </script>
+</body>
+</html>
